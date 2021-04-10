@@ -1,0 +1,18 @@
+* Buscar diferencia entre .war y .jar (usos recomendados de cada uno)
+* TCP/IP -> Orientado a la conexión. Ejemplo con datagramas udp
+* Revisar video de Kubernetes basado en instancias SPOT.
+
+
+Pasos docker alcanzados como equipo :)
+Instalación: https://github.com/dpetrocelli/sdypp2020/tree/master/TPS/No%20obligatorios 
+
+1. hicimos un ejerciio X -> levantar un servcio TCP 9090
+2. compilarlo -> MVN (bajar dependencias, plugins para compilar) -> mvn clean package ; -> server.....jar
+3. receta docker (dockerfile). sentencias. 
+    1ro - de que imagen parto. java
+    2do - copiar (meter) nuestro java compilado adentro de la imagen 
+    3ro - expose del puerto (permitir el tráfico entrante a el contenedor)
+    4ro - ejecución -> java -jar nombre (igual a correrlo en la consola de la pc)
+4. construir la imagen (para que esté disponible y poder correrla)
+    comando: docker build -> imagen (.iso)
+5. correr el contenedor -> .ISO
