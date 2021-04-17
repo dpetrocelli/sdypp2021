@@ -1,0 +1,17 @@
+2021-04-16 19:58:08 | INFO  | [main] o.e.Server:23 - Server has started on port 9091
+2021-04-16 19:58:22 | INFO  | [main] o.e.Server:23 - Server has started on port 9091
+2021-04-16 20:03:34 | INFO  | [main] o.e.Server:21 - Server has started on port 9091
+2021-04-16 20:17:59 | INFO  | [main] o.e.Server:21 - Server has started on port 9091
+2021-04-16 20:32:56 | INFO  | [main] o.e.Server:21 - Server has started on port 9091
+2021-04-16 20:55:14 | INFO  | [main] o.e.Server:20 - Server has started on port 9091
+2021-04-16 20:55:27 | INFO  | [main] o.e.Server:27 -  recibimos al cliente: [B@23e028a9
+2021-04-16 20:55:27 | INFO  | [main] o.e.Server:27 -  recibimos al cliente: [B@5ae63ade
+2021-04-16 20:55:27 | INFO  | [main] o.e.Server:27 -  recibimos al cliente: [B@610694f1
+2021-04-16 21:00:44 | INFO  | [main] o.e.Server:27 -  recibimos al cliente: [B@43814d18
+2021-04-16 21:00:44 | INFO  | [main] o.e.Server:27 -  recibimos al cliente: [B@5c5a1b69
+2021-04-16 21:00:44 | INFO  | [main] o.e.Server:27 -  recibimos al cliente: [B@3701eaf6
+2021-04-16 21:01:30 | INFO  | [main] o.e.Server:22 - Server has started on port 9091
+2021-04-16 21:01:37 | INFO  | [main] o.e.Server:37 - RE: 1
+2021-04-16 21:01:37 | INFO  | [main] o.e.Server:37 - RE: 2
+2021-04-16 21:01:37 | INFO  | [main] o.e.Server:37 - RE: 3
+2021-04-16 21:01:37 | INFO  | [main] o.e.Server:43 - El servidor atendió mas de 4 peticiones

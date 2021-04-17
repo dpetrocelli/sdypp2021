@@ -1,0 +1,20 @@
+Ver en la semana:
+suscribe de thread states a una cola de eventos x?
+Temas:
+- ELK / EFK
+- tcp (c4) / http (c5) / websocket (c5 encima de http)
+- pasar argumentos por consola (Spring)
+
+Comandos 
+variable="hola"
+echo $variable
+variable=$(comando)
+
+se usa ; para "concatenar" Comandos
+variable=$(docker ps --all -q) ; docker start $variable; sleep 5 ; docker ps
+
+& -> 
+* jobs (muestra los procesos ejecutándose en back)
+fg -> traigo un determinado procesos
+
+
