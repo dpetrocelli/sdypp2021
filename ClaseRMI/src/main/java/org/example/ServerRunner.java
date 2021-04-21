@@ -29,9 +29,9 @@ public class ServerRunner implements RemoteInt, Remote{
     public String sumaVectoresBasadaEnObjetos(String ovx) throws RemoteException {
         // [STEP 0] - convierto de string (json) -> Objeto -> ObjetosVectores
         ObjetosVectores ov = gson.fromJson(ovx, ObjetosVectores.class);
-        System.out.println(" V3 - SUB 1 : "+ov.getV3()[1]);
-        //int[] v3 = new int[10];
-        //ov.setV3(v3);
+        //System.out.println(" V3 - SUB 1 : "+ov.getV3()[1]);
+        int[] v3 = new int[10];
+        ov.setV3(v3);
         // [STEP 1] - Opero como objeto normal
         for (int i =0;i<ov.v1.length;i++){
             ov.v3[i]= ov.v1[i]+ov.v2[i];

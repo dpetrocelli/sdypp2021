@@ -31,7 +31,7 @@ public class Client {
             // clase cliente ov <--- pise con la copia <--- server
 
             String jsonMsg = gson.toJson(ov,ObjetosVectores.class);
-            jsonMsg = jsonMsg.substring(0,(jsonMsg.length()-1));
+            //jsonMsg = jsonMsg.substring(0,(jsonMsg.length()-1));
 
             System.out.println(jsonMsg);
             ov = gson.fromJson(ri.sumaVectoresBasadaEnObjetos(jsonMsg),ObjetosVectores.class);
