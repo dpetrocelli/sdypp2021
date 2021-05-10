@@ -1,5 +1,6 @@
 package com.backend.configuration;
 
+import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -35,6 +36,11 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    Queue eventQueue() {
+        return new Queue("eventQueue", IS_DURABLE_QUEUE);
+    }
+
+    @Bean
     DirectExchange exchange() {
         return new DirectExchange(EXCHANGE_NAME);
     }
@@ -49,6 +55,7 @@ public class RabbitMQConfig {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(host);
         cachingConnectionFactory.setUsername(username);
         cachingConnectionFactory.setPassword(password);
+
         return cachingConnectionFactory;
     }
 
@@ -56,11 +63,48 @@ public class RabbitMQConfig {
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
-
+    
+    // Versión autoACK
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        rabbitTemplate.containerAckMode(AcknowledgeMode.MANUAL);
+
+        //rabbitTemplate.consusetMaxConcurrentConsumers(10);
         return rabbitTemplate;
     }
+
+
+    /*
+    Versión con manual ACK
+
+
+    @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) { 
+    	RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        // Message sending failure returned to the queue, publisher returns needs to be configured for the profile: true
+        rabbitTemplate.setMandatory(true);
+ 
+        // Message return, the configuration file needs to configure publisher returns: true
+        // The ReturnCallback interface is used to implement the callback when a message is sent to the RabbitMQ switch, but there is no corresponding queue bound to the switch.
+        rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
+            System.out.println("Message sending failed:No corresponding queue bound to switch");
+        });
+ 
+        // Message confirmation, the configuration file needs to configure publisher confirms: true
+        // The ConfirmCallback interface is used to receive ack callbacks after messages are sent to the RabbitMQ exchanger.
+        rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
+            if (ack) {
+                System.out.println("Message sent successfully:Message sent to RabbitMQ exchanger");
+            } else {
+                System.out.println("Message sending failed:Message not sent to RabbitMQ exchanger");
+            }
+        });
+ 
+        return rabbitTemplate;
+    }
+        */
+
 }

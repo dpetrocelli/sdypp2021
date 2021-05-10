@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f compose-maria.yaml
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rabbitmq
+  name: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rabbitmq
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f compose-maria.yaml
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: rabbitmq
+    spec:
+      containers:
+        - args:
+            - --init-file
+            - /data/application/init.sql
+          env:
+            - name: MYSQL_DATABASE
+              value: springbootdb
+            - name: MYSQL_ROOT_PASSWORD
+              value: my-secret-pw
+            - name: MYSQL_ROOT_USER
+              value: root
+          image: mariadb:latest
+          name: rabbitmq
+          ports:
+            - containerPort: 3306
+          resources: {}
+          volumeMounts:
+            - mountPath: /data/application/init.sql
+              name: rabbitmq-claim0
+      restartPolicy: Always
+      volumes:
+        - name: rabbitmq-claim0
+          persistentVolumeClaim:
+            claimName: rabbitmq-claim0
+status: {}

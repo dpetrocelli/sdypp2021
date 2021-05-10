@@ -1,0 +1,46 @@
+# VAGRANT_VAGRANTFILE=UbuntuVagrant vagrant up
+Vagrant.configure("2") do |config|
+    
+    
+
+    required_plugins = %w( vagrant-vbguest vagrant-disksize )
+    _retry = false
+    required_plugins.each do |plugin|
+        unless Vagrant.has_plugin? plugin
+            system "vagrant plugin install #{plugin}"
+            _retry=true
+        end
+    end
+
+    if (_retry)
+        exec "vagrant " + ARGV.join(' ')
+    end
+
+    config.vm.box = "alpine/alpine64" 
+    config.disksize.size = "4GB"
+    #config.name = "Alpine 1.1 (Vagrant) "
+    
+    config.vm.network "private_network", ip: "192.168.33.10",
+      virtualbox__intnet: true
+    
+    config.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      vb.cpus = 1
+        #instance.vm.provision "file", source: "docker-compose.yml", destination: "/home/vagrant/docker-compose.yml"
+        #instance.vm.provision "shell", inline: $docker_role_script
+      
+    end
+    
+    
+  
+      
+  
+      
+  
+    $docker_role_script = <<-SCRIPT
+      echo "Updating..."
+      sudo apk update 
+      sudo apk install curl
+      
+    SCRIPT
+  end

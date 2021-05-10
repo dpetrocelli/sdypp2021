@@ -1,5 +1,4 @@
 package com.backend.controladores;
-
 import com.backend.dto.CustomMessage;
 import com.backend.dto.Mensaje;
 import com.backend.entidades_modelo.Lugar;
@@ -21,28 +20,30 @@ import java.util.List;
 @RequestMapping("/api/rabbit/")
 
 public class RabbitController {
+    Gson gson = new Gson();
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
     RabbitMQService rabbitMQService;
 
-    @GetMapping("listall")
+    @GetMapping("getfirst")
     public ResponseEntity<List<CustomMessage>> getLista(){
-        CustomMessage cm = (CustomMessage) rabbitMQService.pullMessage();
-        log.info(" Obteniendo lista de Lugares");
-        return new ResponseEntity(new Mensaje("Text is mandatory"),HttpStatus.OK);
+        String msg = (String) rabbitMQService.pullMessage();
+        CustomMessage cm = gson.fromJson(msg, CustomMessage.class);
+        log.info(" First Msg has been recovered and not removed from queue");
+        return new ResponseEntity(new Mensaje(cm.getText()),HttpStatus.OK);
     }
 
-    @PostMapping("nuevo")
+    @PostMapping("new")
     public ResponseEntity<?> create (@RequestBody String cm){
 
         CustomMessage customMessage = new Gson().fromJson(cm, CustomMessage.class);
         log.info(" Registering Custom Message: "+customMessage.getText());
         if(StringUtils.isBlank(customMessage.getText()))
             return new ResponseEntity(new Mensaje("Text is mandatory"), HttpStatus.BAD_REQUEST);
-        /*if(lugarServicio.existePorNombre(lugar.getNombre()))
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        */
-        rabbitMQService.send(customMessage);
+
+        rabbitMQService.pushMessage(customMessage);
+
+
         return new ResponseEntity(new Mensaje("Message has been saved"), HttpStatus.CREATED);
     }
 }
